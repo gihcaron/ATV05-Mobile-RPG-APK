@@ -1,39 +1,48 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { Card, Text, IconButton } from "react-native-paper";
 
 export default function CharacterCard({ character, onToggleRecruit, onRemove }) {
   return (
-    <TouchableOpacity
-      style={[styles.character, character.recruited && styles.characterRecruited]}
+    <Card
+      style={[styles.card, character.recruited && styles.cardRecruited]}
       onPress={() => onToggleRecruit(character)}
       onLongPress={() => onRemove(character)}
+      mode="elevated"
     >
-      <Text style={[styles.characterText, character.recruited && styles.characterRecruitedText]}>
-        {character.name}
-      </Text>
-      <Text style={styles.status}>
-        {character.recruited ? "⭐" : "💤"}
-      </Text>
-    </TouchableOpacity>
+      <Card.Content style={styles.content}>
+        <Text style={[styles.characterText, character.recruited && styles.characterRecruitedText]}>
+          {character.name}
+        </Text>
+        <IconButton
+          icon={character.recruited ? "star" : "sleep"}
+          iconColor={character.recruited ? "#E69A28" : "#C5282F"}
+          size={28}
+          style={styles.status}
+        />
+      </Card.Content>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create({
-  character: {
+  card: {
     backgroundColor: "#2C1810",
-    padding: 15,
-    borderRadius: 8,
     marginBottom: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: "#58180D",
   },
-  characterRecruited: {
+  cardRecruited: {
     backgroundColor: "#58180D",
     borderColor: "#E69A28",
     borderWidth: 2,
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 2,
   },
   characterText: {
     flex: 1,
@@ -46,7 +55,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   status: {
-    fontSize: 20,
     marginLeft: 10,
   },
 });
